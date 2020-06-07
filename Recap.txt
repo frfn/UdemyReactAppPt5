@@ -1,0 +1,77 @@
+Setting up took almost 20-25 min since I had created app from npx create-react-app
+ - Files all came from Udemy
+ - Copied over the /src files and npm install
+ - Created a GitHub so I can push changes and store them
+ - Works as expected, first glance, 4 main files with Blog.js being the main file where all the components will go
+ - NewPost.js is stateful while all our stateless (changed)
+ - They are all class based components since we will be using lifecycle methods, we can use React Hooks here as well
+ 
+1. Starting the AJAX / HTTP requests
+     - We can use the built in XML / HTTP request methods but that will be cumbersome, we will use a third party library called Axios:
+         - Axios
+             - I can add to any React Application, it is JavaScript and used for XMLHTTPRequests
+             - npm install axios --save
+             - import axios 
+
+         - Axios is Promise based
+             - it will have something to report back to you
+             - 3 states
+                 - pending
+                 - fulfilled
+                 - rejected      
+             - This means that the whole web page can load and does not need to wait for the process to finish, Axios is ASYNC + Promise based
+             - Synchronous VS Asynchronous:
+                 - Sync is one process at a given time
+                 - Aysnc is multiple processes at a given time 
+
+     - Storing the request from axios into a variable DOES NOT work
+         - .get() is async, it does not finish immediately, it needs time to go to the server and collect data
+
+         - to store it, use the state!
+            - setState({
+                posts: response.data
+            })
+
+     - Manipulate data!
+         - Since response.data is an array, we can use methods on it and shorten it, map it, reduce, etc! 
+
+         - In Blog.js, we have shortened it (using splice() method) and added an author property with the help of the spread operator ( ...post ) and .map()
+
+         - Working with async methods should be thought of ahead of time, here I faced a problem where I am getting an error from FullPost.js
+             - Network Loop
+
+2. Getting familiar with data
+     - axios.get('url').then( ..code ..)
+         - this will return a JSON formatted data from the URL, in the example, the server we're pinging is RESTful. So it returns a JSON formatted data
+
+
+     - axios.post('url', {obj})
+         - we are sending an object to the server, and POSTing it
+
+3. NewPost.js
+     - I got ahead of myself and created something that would be nice if there were multiple forms. Using dynamic object naming notation, in setState, setting the values
+
+     - I am getting over my head tbh, stay focused, and don't worry about 'remembering' all the things. No one knows everything. Stay motivated! Okay? :)
+
+     - axios
+         - I am using axios.post(url, obj, config) which takes in three arguments!
+         - look at NewPost.js to see how it works
+
+
+     - axios(url).then(response => { ..code.. })
+
+     EXTRA:
+         - added a 'Loading...' in the button component
+         - was wondering how I can have text while the POST process happening,
+
+4. deletePostHandler method
+     - axios.delete(URL)
+     - I took a look at how .delete() works, it is the URL that you need to delete the item
+     - it is async/promise based SO it will return a response object
+
+5. Blog.js
+     - .catch() has been implemented and it is to catch if there are errors that occurs
+     - created a property in state, error: false
+     - set error to true in .catch() so that it indicates that there is an error that occured
+     - changed the String for 'posts' so that it can display 'Oops, something went wrong...'
+     - Done with an if statement, if ( !this.state.error ) { ..show posts.. } 
