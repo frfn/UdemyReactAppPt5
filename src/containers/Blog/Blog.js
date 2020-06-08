@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../axios'
 
 import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
@@ -18,7 +19,7 @@ class Blog extends Component {
 
     /* Lifecycle Method */
     componentDidMount() {
-        axios.get('http://jsonplaceholder.typicode.com/posts/')
+        axios.get('/posts/')
 
             /* the 'response' is an object passed AUTOMATICALLY - it is the end point of the API */
             /* the 'response' has valuable data like status, statusText, requests, etc., INCLUDING the .data (which are Arrays!) */

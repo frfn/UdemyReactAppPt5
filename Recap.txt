@@ -75,3 +75,29 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
      - set error to true in .catch() so that it indicates that there is an error that occured
      - changed the String for 'posts' so that it can display 'Oops, something went wrong...'
      - Done with an if statement, if ( !this.state.error ) { ..show posts.. } 
+
+6. Interceptors – so we can execute code gloablly (example, when a request from axios is sent)
+     - I go to the most global file, index.js
+     - index.js is what is mounted to the DOM
+     - import axios from 'axios'
+     - if I intercept, it will BLOCK the current request for Blog.js
+         - to fix, return the requestConfig object!
+     - The idea behind interceptors is that I can edit request configs
+         - I can add headers, stuff like that
+         - Powerful because we can add authorization headers as well
+     - the second argument is for errors
+     - you can add or remove by 
+     axios.interceptors.request/response.use/eject(requestConfig/responseConfig => { .. code ..})
+    
+7. Setting default settings
+     - Ease of use: instead of writing the URL every time, I can configure a setting
+         - axios.defaults.baseURL = 'url'
+     - Accessing headers and adding/modifying/deleting values in the property
+
+8. Creating and Using Axios Instances
+     - created a new file, axios.js
+     - This is a copy of the axios object
+     - commented out axios baseURL and common['Auth'] and put it in axios.js
+         - Creating a new instance!
+     - export default instance; -- its like exporting class or functional components
+     - Note: I do not see the interceptors console log anymore (the request and response) because the setter was set up for the GLOBAL axios object
