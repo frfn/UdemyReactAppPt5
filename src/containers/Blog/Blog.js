@@ -19,6 +19,7 @@ class Blog extends Component {
 
     /* Lifecycle Method */
     componentDidMount() {
+        /* I am able to shorten BECAUSE I created the axios.js instance and made baseURL the link that posts/ will come from */
         axios.get('/posts/')
 
             /* the 'response' is an object passed AUTOMATICALLY - it is the end point of the API */
