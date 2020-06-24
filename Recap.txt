@@ -100,4 +100,12 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
      - commented out axios baseURL and common['Auth'] and put it in axios.js
          - Creating a new instance!
      - export default instance; -- its like exporting class or functional components
+     - don't forget to change all of the classes that use Axios to use the newly created instance!
      - Note: I do not see the interceptors console log anymore (the request and response) because the setter was set up for the GLOBAL axios object
+
+------------
+
+9. ROUTING
+    - Enables SPA properties
+        - Multiple pages in a single page
+        - 

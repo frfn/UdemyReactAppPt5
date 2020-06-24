@@ -45,7 +45,7 @@ class Blog extends Component {
                 this.setState({
                     /* posts: response.data */
                     posts: updatedPosts
-                }, () => {console.log(response)});
+                }, () => {console.log(updatedPosts)});
                 // console.log(response)
             })
             .catch(error => {
@@ -82,7 +82,15 @@ class Blog extends Component {
         }
 
         return (
-            <div>
+            <div className="Blog">
+                <header>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/new-post">New Post</a></li>
+                        </ul>
+                    </nav>
+                </header>
                 <section className="Posts">
                     {posts}
                     {/* <Post />

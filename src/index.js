@@ -45,7 +45,7 @@ axios.interceptors.response.use(responseConfig => {
   return responseConfig;
 }, error => {
   console.log(error);
-  return error;
+  return Promise.reject(error);
 })
 
 ReactDOM.render(
