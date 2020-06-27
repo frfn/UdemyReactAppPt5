@@ -108,4 +108,32 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
 9. ROUTING
     - Enables SPA properties
         - Multiple pages in a single page
-        - 
+        - One server, multiple pages, it is done by routing
+    - Prep
+        - Blog.js
+            - created a header --> nav --> ul --> li, a href="/" | href="/new-posts"
+            - created a CSS for the ul, li, a tags 
+    - Setting Up
+        - npm install --save react-router react-router-dom
+            - MUST have both dependencies react-router AND react-router-dom
+            - --save so it SAVES in the package.json 
+        - router is NOT by Facebook
+    - Start
+        - comment out FullPost and NewPost
+        - "/" is root path
+        - "/new-post" is new post path, etc.
+        - In Index or App, you MUST wrap part of the app that should render routes
+            - Did in App.js
+            - <BrowserRouter> enables routing!
+                - Wraps <Blog /> so any component in Blog will get the logic for Routing
+        - Created new folder in Blog folder, Posts
+        - Moved NewPost and FullPost inside container/Blog because these are now DISTINCT pages because of routing
+    - React Router vs React Router Dom
+        - historically React Router is what you'd need, but React Router Dom is ultimately the dependency you need
+    - Moved all the Post logic, state and code into Posts.js
+        - Moved entirety of code from Blog.js to Posts.js, including the componentDidMount
+        - removed the selectedPostId and error property in the state!
+            - not needed because it was used in the Blog.js
+    - Blog.js is just a skeleton now, a framework for the components to be in
+        - Reformatted the Blog.js, modularized is all I did
+    
