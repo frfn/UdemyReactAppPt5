@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { Route, NavLink } from "react-router-dom";
 // import axios from 'axios'
-import axios from "../../axios";
+// import axios from "../../axios";
 
 // import Post from "../../components/Post/Post";
 // import FullPost from "./FullPost/FullPost";
 // import NewPost from "./NewPost/NewPost";
 import "./Blog.css";
 import Posts from "./Posts/Posts";
+import NewPost from "./NewPost/NewPost";
 
 class Blog extends Component {
 	render() {
@@ -14,18 +16,43 @@ class Blog extends Component {
 			<div className='Blog'>
 				<header>
 					<nav>
+						{/* Unordered List */}
 						<ul>
+							{/* List Elements */}
 							<li>
-								<a href='/'>Home</a>
+                                <NavLink 
+                                exact 
+                                to='/'
+                                activeClassName="the-active-class"
+                                >
+									Home
+								</NavLink>
 							</li>
+
 							<li>
-								<a href='/new-post'>New Post</a>
+								<NavLink
+									to={{
+										pathname: "/new-post",
+										hash: "#submit" /* for submitting */,
+										search: "?quick-submit=true",
+                                    }}
+                                    activeStyle={{
+                                        color: 'blue',
+                                        textDecoration: 'underline'
+                                    }}
+								>
+									New Post
+								</NavLink>
 							</li>
 						</ul>
 					</nav>
 				</header>
 
-				<Posts />
+				{/* path variable is RESERVED word */}
+				{/* '/' root should always be exact because each path has a root. */}
+				<Route path='/' exact component={Posts} />
+				{/* <Route path='/new-post' render={() => <NewPost />} /> */}
+				<Route path='/new-post' component={NewPost} />
 
 				{/* <section className="Posts">
           {posts}

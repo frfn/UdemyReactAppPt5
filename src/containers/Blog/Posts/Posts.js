@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Post from "../../../components/Post/Post";
-import axios from '../../../axios'
-import styles from './Posts.module.css'
+import axios from "../../../axios";
+import styles from "./Posts.module.css";
 
 class Posts extends Component {
 	state = {
 		/* onClick function will have method that sets state for this property! */
-		// selectedPostId: null,
+		selectedPostId: null,
 
 		/* response.data is an Array! the value of posts can be anything but for convention is set to empty list */
 		posts: [],
@@ -15,7 +15,9 @@ class Posts extends Component {
 
 	/* Lifecycle Method */
 	componentDidMount() {
-		/* I am able to shorten BECAUSE I created the axios.js instance and made baseURL the link that posts/ will come from */
+		console.log(this.props)
+
+		/* I am able to shorten path name BECAUSE I created the axios.js instance and made baseURL the link that posts/ will come from */
 		axios
 			.get("/posts/")
 
@@ -42,14 +44,14 @@ class Posts extends Component {
 						/* posts: response.data */
 						posts: updatedPosts,
 					},
-					() => {
-						console.log(updatedPosts);
-					}
+					// () => {
+					// 	console.log(updatedPosts);
+					// }
 				);
 				// console.log(response)
 			})
 			.catch((error) => {
-				console.log(error);
+				// console.log(error);
 				this.setState({
 					error: true,
 				});
@@ -65,10 +67,11 @@ class Posts extends Component {
 			{
 				selectedPostId: id,
 			},
-			() => {
-				console.log(this.state.selectedPostId);
-			}
+			// () => {
+			// 	console.log(this.state.selectedPostId);
+			// }
 		);
+		
 	};
 
 	render() {
@@ -85,6 +88,14 @@ class Posts extends Component {
 						title={post.title}
 						author={post.author}
 						key={post.id}
+						/* - using the spread operator will pass in the history, location, match, etc into the Post component
+							
+							{...this.props}
+
+						   - this passes ALL the props into the Post.js component or do it manually
+
+							match = {this.props.matchh}
+						*/
 					/>
 				);
 			});

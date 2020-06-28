@@ -136,4 +136,93 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
             - not needed because it was used in the Blog.js
     - Blog.js is just a skeleton now, a framework for the components to be in
         - Reformatted the Blog.js, modularized is all I did
+    - Routing
+        - Using the <Route /> tag to route to different 'pages' - also gives props to the component
+            - RESERVED WORDS TO REMEMBER:
+                - exact (for '/') - boolean value, by using this it will create an quasi-absolute path, if I do post/2, it will not load!
+                - path="url_loc"
+                - render={() => {jsx}} - Anonymous Function
+                - component={component-name}, not the TAG (<Posts />) just 'Posts'
+
+                ** use component keyword as a default. Only use render for small messages.
+
+                <Route path='/' exact render={() => {jsx}}/>
+                <Route path='/' exact component={Posts}
+    - Reloading Issue?
+        - We do not want to Reload because state will be refreshed and state will go away and restart.
+        - How to stop that:
+            - DO NOT use <a href>, use <Link> from 'react-router-dom' if using routing.
+            - <Link /> reserved words
+                - to='/'
+                    - also accepts objects
+                         to={{
+                            pathname: 'loc',
+                            hash: '#submit',
+                            search: '?submit=true'
+                            }}
+    - Using 'component' inside the <Route component={Posts} /> is more recommended because more info is given
+        - In action: render VS component, render reserved word does NOT give this.props information, no object is given!
+        - IN URL:
+            - new-post/2? ...
+                - isExact in this.props changes to false as it is not EXACT path
+    - Had to recap how the Post.js and Posts.js works
+        - Collecting the post.id from .map() in Posts.js
+            - method grabs the id when the <div> .. <article> has been pressed
+                - IT WILL have its own data since the .map() iterates through all the items
+    - import { withRouter } from 'react-router-dom'
+        - adds router information to a component
+        - used on Post.js to give more information for routes, it will give the props!
+        - a HOC wrapper
+            export default withRouter(post);
+        - it will make the component 'Route Aware', it will GIVE access to router settings to the component!
+    - Absolute Path VS Relative Path
+        - Absolute:
+            - always appended to root domain
+            - example.com/new-post <-- main URL
+            - if
+                example.com/post/new-post <-- the URL will omit /post/
+                and convert to: example.com/new-post
+        - Relative:
+            - this.props.match.url + '/new-post'
+            - it appends the '/new-post' at the end of the previous URL
+            - it becomes a relative path!
+
+        - There is NO better way, pick any. 
+    - Absolute vs Relative Paths (Article)
+        You learned about <Link> , you learned about the to  property it uses.
+        The path you can use in to can be either absolute or relative. 
+        - Absolute Paths
+            By default, if you just enter to="/some-path"  or to="some-path" , that's an absolute path. 
+            Absolute path means that it's always appended right after your domain. Therefore, both syntaxes (with and without leading slash) lead to example.com/some-path .
+        - Relative Paths
+            Sometimes, you might want to create a relative path instead. This is especially useful, if your component is already loaded given a specific path (e.g. posts ) and you then want to append something to that existing path (so that you, for example, get /posts/new ).
+            If you're on a component loaded via /posts , to="new"  would lead to example.com/new , NOT example.com/posts/new . 
+            To change this behavior, you have to find out which path you're on and add the new fragment to that existing path. You can do that with the url  property of props.match :
+            
+            <Link to={props.match.url + '/new'}>  
+            
+            will lead to example.com/posts/new  when placing this link in a component loaded on /posts . If you'd use the same <Link>  in a component loaded via /all-posts , the link would point to /all-posts/new .
+            
+            There's no better or worse way of creating Link paths - choose the one you need. Sometimes, you want to ensure that you always load the same path, no matter on which path you already are => Use absolute paths in this scenario.
+            Use relative paths if you want to navigate relative to your existing path.
+
+    - Link VS NavLink component
+        - activeClassName='active-Name'
+            - instead of class="active", you can change the class name to however you like!
+
+        - activeStyle={{
+            color: 'blue',
+            textDecoration: 'underline'
+          }}
+            - this gives the NavLink inline styling!
+
+        - similar to Link but adds extra props to give styling to the link!
+            from: import { Route, Link } from "react-router-dom";
+            to:   import { Route, NavLink } from "react-router-dom";
+
+            - We now have an '.active' class we can use!
+            - In the CSS, adding Blog a.active will change the color
+                - BUG: Both Links are highlighted... why? The '/' is treated as prefixes, since both '/' and '/new-posts' has '/', it treats it as a prefix
+                - FIX: add 'exact' in the Link tag, it tells the Router, NO, it's not a prefix, it's the full path!
+    
     
