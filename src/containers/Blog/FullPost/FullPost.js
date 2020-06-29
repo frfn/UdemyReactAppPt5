@@ -3,6 +3,10 @@ import axios from "../../../axios";
 
 import "./FullPost.css";
 
+/* ANYTHING with this.props.id = undefined. I left it there for demo purposes, you can see IN console log */
+/* this.state.loadedPost in this example is the axios data */
+/* this.props are the properties PASSED FROM Blog.js because of the <Route to='/posts/:id/' exact component={FullPost}> tag */
+
 class FullPost extends Component {
 	/* loadedPost - right now, nothing has been loaded! */
 	state = {
@@ -25,9 +29,11 @@ class FullPost extends Component {
 
 	/* Safely fetching data! */
 	/* We have checked the properties as well as the state! */
-	componentDidUpdate() {
+	componentDidMount() {
+		console.log(this.props)
+
 		/* if props.id is TRUE, execute */
-		if (this.props.id) {
+		if (this.props.match.params.num) {
 			/* since loadedPost is NULL, w/o '!this.state.loadedPost', the 'if' condition will NEVER execute */
 			/* this.state.loadedPost checks to see if loadedPost has a value, if it does, true! */
 			/* 
@@ -41,12 +47,15 @@ class FullPost extends Component {
 
             only CHANGE when the props.id is changed.
             */
+			
+
 			if (
 				!this.state.loadedPost ||
 				(this.state.loadedPost &&
 					this.state.loadedPost.id !== this.props.id)
 			) {
-				axios.get("/posts/" + this.props.id).then((response) => {
+				
+				axios.get("/posts/" + this.props.match.params.num).then((response) => {
 					this.setState({
 						loadedPost: response.data,
 					});
@@ -57,7 +66,7 @@ class FullPost extends Component {
 	}
 
 	deletePostHandler = () => {
-		axios.delete("/posts/" + this.props.id).then((response) => {
+		axios.delete("/posts/" + this.props.match.params.num).then((response) => {
 			console.log(response);
 		});
 	};
@@ -66,7 +75,7 @@ class FullPost extends Component {
 		let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
 
 		/* This is to show that there IS a call being made, since AXIOS is Promise based, it is ASYNC, so this will show that it IS loading... for user purposes */
-		if (this.props.id) {
+		if (this.props.match.params.id) {
 			post = <p style={{ textAlign: "center" }}>Loading...</p>;
 		}
 

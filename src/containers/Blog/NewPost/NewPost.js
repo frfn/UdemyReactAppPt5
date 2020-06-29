@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "../../../axios";
-import { Link } from "react-router-dom";
 
 import "./NewPost.css";
 
@@ -13,7 +12,13 @@ class NewPost extends Component {
 	};
 
 	componentDidMount() {
-		console.log(this.props);
+        console.log(this.props);
+        
+        /* Gives the KEY VALUE pair of the search query! */
+        const query = new URLSearchParams(this.props.location.search)
+		for(let params of query.entries()) {
+			console.log(params)
+		}
 	}
 
 	/* I am going to alter some stuff, but will keep original! edit: failed. */

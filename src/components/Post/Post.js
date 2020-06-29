@@ -6,7 +6,7 @@ import "./Post.css";
 const post = (props) => {
     /* props will have info passed from Posts.js + the props from BrowserRouter: history, location, match, staticContext 
     because of the withRouter() wrapper! */
-	console.log(props);
+	// console.log(props);
 	return (
 		<article className='Post' onClick={props.clicked}>
 			<h1>{props.title}</h1>

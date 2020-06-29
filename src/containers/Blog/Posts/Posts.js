@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Post from "../../../components/Post/Post";
 import axios from "../../../axios";
 import styles from "./Posts.module.css";
+// import { Link } from "react-router-dom";
 
 class Posts extends Component {
 	state = {
 		/* onClick function will have method that sets state for this property! */
-		selectedPostId: null,
+		// selectedPostId: null,
 
 		/* response.data is an Array! the value of posts can be anything but for convention is set to empty list */
 		posts: [],
@@ -15,7 +16,7 @@ class Posts extends Component {
 
 	/* Lifecycle Method */
 	componentDidMount() {
-		console.log(this.props)
+		console.log(this.props);
 
 		/* I am able to shorten path name BECAUSE I created the axios.js instance and made baseURL the link that posts/ will come from */
 		axios
@@ -43,7 +44,7 @@ class Posts extends Component {
 					{
 						/* posts: response.data */
 						posts: updatedPosts,
-					},
+					}
 					// () => {
 					// 	console.log(updatedPosts);
 					// }
@@ -63,15 +64,20 @@ class Posts extends Component {
 	/* if user clicks on post */
 	/* ID is collected from anonymous function, below */
 	postSelectedHandler = (id) => {
-		this.setState(
-			{
-				selectedPostId: id,
-			},
-			// () => {
-			// 	console.log(this.state.selectedPostId);
-			// }
-		);
-		
+		// this.setState(
+		// 	{
+		// 		selectedPostId: id,
+		// 	},
+		// 	// () => {
+		// 	// 	console.log(this.state.selectedPostId);
+		// 	// }
+		// );
+
+		this.props.history.push({
+			pathname: "/" + id
+		});
+
+		// this.props.history.push('/' + id);
 	};
 
 	render() {
@@ -82,6 +88,10 @@ class Posts extends Component {
 		if (!this.state.error) {
 			posts = this.state.posts.map((post) => {
 				return (
+					/* post.id IS from the response.data */
+					/* KEY as we know MUST be in the most OUTER tag */
+					/* clicking the LINK, I will be redirected to that PATH URL */
+					// <Link  to={'/' + post.id}>
 					<Post
 						/* clicked will just collect the id and pass it into its parameter! */
 						clicked={() => this.postSelectedHandler(post.id)}
@@ -97,6 +107,7 @@ class Posts extends Component {
 							match = {this.props.matchh}
 						*/
 					/>
+					// </Link>
 				);
 			});
 		}
