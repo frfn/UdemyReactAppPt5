@@ -22,11 +22,11 @@ class Blog extends Component {
 							{/* List Elements */}
 							<li>
 								<NavLink
-									exact
-									to='/'
+									// exact // the styling will be active if we EXACTLY have the '/' URL
+									to='/posts' //changing the '/' to '/posts'
 									activeClassName='the-active-class' /* for CSS use, a.the-active-class */
 								>
-									Home
+									Posts
 								</NavLink>
 							</li>
 
@@ -55,13 +55,13 @@ class Blog extends Component {
 				<Switch>
 					{/* path variable is RESERVED word */}
 					{/* '/' root should always be exact because each path has a root. */}
-					<Route path='/' exact component={Posts} />
+					<Route path='/posts' exact component={Posts} />
 					{/* <Route path='/new-post' render={() => <NewPost />} /> */}
 					<Route path='/new-post' component={NewPost} />
 
 					{/* I can set routing here for the post... /:id - dynamic URL, 'id' will be in   */}
 					{/* :num = inside params, we then use in FullPost as this.props.match.params.num */}
-					<Route path='/:num' exact component={FullPost} />
+					<Route path='/posts/:num' exact component={FullPost} />
 				</Switch>
 
 				{/* <section className="Posts">

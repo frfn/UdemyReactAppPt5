@@ -295,7 +295,7 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
         - React router makes it easy to extract the fragment. 
             You can simply access the Fragment by traversing to (props.location.hash)
 
-    17. Without the '/posts/:id' in Blog.js + <Link to='/posts/ ..'>, both the FullPost and NewPost component would render
+    17. Without the 'posts' in '/posts/:id' in Blog.js + <Link to='/posts/ ..'>, both the FullPost and NewPost component would render
         - Flex Fix: add the /posts/
         - More robust way:
             -  import { Switch } from 'react-router-dom';
@@ -303,6 +303,7 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
                 - Just know that if you use switch, order of the routes is important.
                     - Else it will fail.
                         - Ex. /:id and /new-post, new-post is NOT a valid id and would output an error.
+                        - In Blog.js the order is correct but if you put /:num above new-posts, it will be an error because new post is NOT a post in the JSON endpoint
         - You can have this too, very flexible.
             <Route />
             <Switch>
@@ -322,4 +323,14 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
             - push a new page on top of the 'stack' of pages!
             - .push() and all the other props in history are methods!
 
-    
+    19. Edge Case
+        - Home --> Posts, when clicking on a post it renders the 'Home' link to not be styled, changed the <Route> and <Link> in Blog.js 
+            and push() method in Posts.js
+            to="/posts/'
+            path="/posts/'
+            .push({
+                pathname: '/posts/' + id
+            })
+        - You can face potential issues when using '/' to style
+         
+    20. 

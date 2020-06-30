@@ -74,7 +74,7 @@ class Posts extends Component {
 		// );
 
 		this.props.history.push({
-			pathname: "/" + id
+			pathname: "/posts/" + id
 		});
 
 		// this.props.history.push('/' + id);
@@ -91,7 +91,7 @@ class Posts extends Component {
 					/* post.id IS from the response.data */
 					/* KEY as we know MUST be in the most OUTER tag */
 					/* clicking the LINK, I will be redirected to that PATH URL */
-					// <Link  to={'/' + post.id}>
+					// <Link  to={'/posts/' + post.id}>
 					<Post
 						/* clicked will just collect the id and pass it into its parameter! */
 						clicked={() => this.postSelectedHandler(post.id)}
@@ -107,7 +107,7 @@ class Posts extends Component {
 							match = {this.props.matchh}
 						*/
 					/>
-					// </Link>
+					//  </Link>
 				);
 			});
 		}
