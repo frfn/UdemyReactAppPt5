@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../../axios";
+import { Redirect } from 'react-router-dom'
 
 import "./NewPost.css";
 
@@ -9,9 +10,13 @@ class NewPost extends Component {
 		body: "",
 		author: "Flex Fad",
 		status: false,
+		// submitted: false
 	};
 
 	componentDidMount() {
+		/* If we want to check for VALIDATION, pass in this.props.auth and check to see. */
+		// If unauth => this.props.history.replace('/posts');
+
         console.log(this.props);
         
         /* Gives the KEY VALUE pair of the search query! */
@@ -47,13 +52,18 @@ class NewPost extends Component {
 			/* the response would be like 201, success!, it would give a status update! Nice. */
 			.then((response) => {
 				console.log(response);
+
 				this.setState({
 					status: false,
+					// submitted: true
 				});
 				alert("Success, your post has been submitted!");
 				/* this.setState({
                     status: response.status
-                }) */
+				}) */
+				
+				/* THIS PUSHES US TO THE NEXT PAGE, the next page, consists of /posts */
+				this.props.history.push('/posts')
 			})
 			.catch((error) => {
 				console.log(error);
@@ -93,8 +103,17 @@ class NewPost extends Component {
 			buttonString = "Loading...";
 		}
 
+		// let redirect = null;
+		// if (this.state.submitted) {
+		// 	redirect = <Redirect to="/posts/" /> 
+		// }
+
 		return (
 			<div className='NewPost'>
+
+				{/* REDIRECTION HERE */}
+				{/* {redirect} */}
+
 				<h1>Add a Post</h1>
 
 				<label>Title</label>

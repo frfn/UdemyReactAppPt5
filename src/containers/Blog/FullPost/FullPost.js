@@ -31,7 +31,15 @@ class FullPost extends Component {
 	/* We have checked the properties as well as the state! */
 	componentDidMount() {
 		console.log(this.props)
+		this.loadData();	
+	}
 
+	componentDidUpdate () {
+		this.loadData();
+	}
+
+	/* IMPORTANT FIX. */
+	loadData () {
 		/* if props.id is TRUE, execute */
 		if (this.props.match.params.num) {
 			/* since loadedPost is NULL, w/o '!this.state.loadedPost', the 'if' condition will NEVER execute */
@@ -52,7 +60,11 @@ class FullPost extends Component {
 			if (
 				!this.state.loadedPost ||
 				(this.state.loadedPost &&
-					this.state.loadedPost.id !== this.props.id)
+					/* params.num is actually a string, if we use strict inequality, it will not compare correctly until casting 'num' to a number 
+						New Learn: add a '+' to make variable into a number!
+					*/
+					// this.state.loadedPost.id !== Number(this.props.match.params.num))
+					this.state.loadedPost.id !== +this.props.match.params.num)
 			) {
 				
 				axios.get("/posts/" + this.props.match.params.num).then((response) => {

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Post from "../../../components/Post/Post";
 import axios from "../../../axios";
 import styles from "./Posts.module.css";
-// import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
+import FullPost from '../FullPost/FullPost'
 
 class Posts extends Component {
 	state = {
@@ -74,7 +75,7 @@ class Posts extends Component {
 		// );
 
 		this.props.history.push({
-			pathname: "/posts/" + id
+			pathname: "/posts/" + id,
 		});
 
 		// this.props.history.push('/' + id);
@@ -111,7 +112,15 @@ class Posts extends Component {
 				);
 			});
 		}
-		return <section className={styles.Posts}>{posts}</section>;
+		return (
+			<div>
+				<section className={styles.Posts}>{posts}</section>
+				{/* I can set routing here for the post... /:id - dynamic URL, 'id' will be in   */}
+				{/* :num = inside params, we then use in FullPost as this.props.match.params.num */}
+				<Route path={this.props.match.url + '/:num'} exact component={FullPost} />
+				{console.log(this.props)}
+			</div>
+		);
 	}
 }
 

@@ -332,5 +332,120 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
                 pathname: '/posts/' + id
             })
         - You can face potential issues when using '/' to style
+        - 'exact' reserved word is modified if you face this, the '/' path can cause issues if you want to style other components.
+            So use more specific path names!
          
-    20. 
+    20. Nested Routes
+        - Currently, all routes are in Blog.js which are simply components that will be shown at the URL
+        - Moving FullPost <Route> to Posts.js!
+            - imported needed component, FullPost + Route
+        - We can use the <Route> tag in ANY component!
+            - Parent Component MUST be wrapped with <BrowserRouter>
+        
+        - By moving the <Route> tag inside the Posts.js component, we now created a NESTED ROUTE.
+            - be careful that the URL reaches correctly, reaching ':/id' in Posts.js will not be possible BECAUSE of the '/' exact path in Blog.js
+            - by having the exact with '/', it will only FIND the '/' path and will stop there. Reaching any URL after gives nothing!
+            - changing the path of Route to {this.props.match.url} <-- that aims to the parent URL
+            - FullPost.js + Posts.js HAS 'num' params, I used 'id' and caused a bug, FullPost was not rendering.
+            - Important to know how to do NESTED ROUTES.
+        
+        - BUG: When clicking on Post, the component is NOT rerendering.
+            - implement componentDidUpdate() in FullPost.js, also created loadData() method
+            - got infinite network loop because the if statement to check if id's (num) are not the same was not implemented correctly!
+                instead of this.props.id --> this.props.match.params.num
+                - add a '+' to make variable into a number!
+                - new props ARE being passed, so componentDidUpdate must be implemented to loadData()!
+
+        - IMPORTANT FIX. componentDidUpdate + componentDidMount were used!
+
+    21. Redirecting to different URL
+        - you can render the same component with a different path!
+        or
+        - <Redirect />
+            <Redirect from='/' to='/posts/'
+                if user goes to /, it will redirect to /posts!
+
+        
+        - <Redirect /> in NewPost.js
+            - outside of <Switch> statement, you MUST use the 'to' property! We can not use 'from'
+            - Conditional Redirect, use state! Look at NewPost.js for example
+
+        - ANOTHER way, history prop! this.props.history!
+            - we already did it, this.props.history.push('/posts');
+
+        Redirect VS push()
+            - push() pushes next page on pages stack, you can also do replace() if you want the same behavior as Redirect
+            - redirect replaces the current component and does not push to stack!
+
+    22. Navigation Gaurds - Crucial To Understand because this will serve for security purposes.
+        - Authenticated or not? 
+            Checks to see if user is AUTHENTICATED. There may be areas where the user MUST be authenticated to see the page, if not, don't render.
+            - In Blog.js:
+                Added state and auth prop, used conditional rendering for this.state.auth
+                Pretty cool, because <Redirect /> changes the URL location and component rendering to '/posts', since '/new-post' is null
+            - Alternative:
+                Go to component that needs to be 'gaurded' 
+                - In componentDidMount, check to see if user is authenticated!
+
+    23. 404 Case - if URL is unknown
+        - Using <Redirect /> handles 404 cases, if unknown URL is encountered, it redirects to a /posts, or you can create a 404 component and render here.
+        
+        Different Way:
+            Use <Route render={() => {<h1>404 URL NOT FOUND</h1>}}/> 
+                - No path keyword is set! 
+                - Catches ALL route, even '/'
+
+        - Use either Redirect or Route to handle 404 cases, they will not work together!
+            Since Redirect has 'from' it catches ALL routes that has '/'
+            from='/' is treated as every URL
+            - How does it know? 
+                There's some magic happening in the back. If the URLb path is not specified by user, it will not be loaded. Pretty sick.
+        
+    24. Loading routes LAZILY -- Good for efficiency, only load component when needed. Great if app has a LARGE file area that does NOT get visited regularly.
+        - The case of, if a user never visits a certain part of the SPA
+        - Only loads the one pages the user will go to, not ALL at once.
+        - Good for optimization
+        - Good to know because if we are downloading LARGE files, loading up the application will take longer than needed
+        - FIX:
+            Code Splitting aka Lazy Loading
+        - How?:
+            Needed React Router 4, and config from create-react-app
+            - Create a HOC wrapper
+            - Check asyncComponent.js in HOC folder
+
+        - Blog.js implements lazy loading
+            when we import stuff, webpack (the build tool used behind the scenes) is informed about the dependency and include it in the bundle.js */
+            code splitting, lazy loading, we don't want that. We only want that component to be loaded when needed.
+
+            - created new variable and executed asyncComponent.
+            - argument inside will be an Anonymous Arrow Function that returns an import() that leads to the NewPost.js
+            - In <Route ... component={asyncComponent}
+            In network settings in Chrome, 2.chunk.js is now loaded -- this is an extra bundle that webpack created from the lazy loading that we just created.
+            - It didn't add the code to the main bundle, instead it prepared it when needed!! Awesome.
+
+            - This is how you load components asynchronously
+            - Useful for bigger apps!
+
+    24a. React Suspense -- Same as Lazy Loading
+        MUST NEED: React v16.6
+            - New method called the lazy()
+            - official way to load components lazily!
+            - Useful when Routing :)
+            - No loading redundant code in advance
+            - Great advantage because we do not have to use Routers for it if we do not need it
+
+            React.lazy()
+            <Suspense fallback={<div>...</div>}> <Posts /> </Suspense>
+
+            Lazy loading is MUCH more important if files are large.
+
+    24b. Routing & The Server (Deployment)
+            User --> Server -->? React App
+            - The server handles the requests first
+                --> issue is React knows the routes... not the server.
+                --> if we visit /post... there is no /post in our server, so it's a 404 error. It never reached the React App
+
+                development server is configured differently (to load correctly), now we have to configure the server side too.
+                --> MUST load and return index.html, especially in 404 cases! React will take over.
+                --> if we have example.com/my-app, we MUST set base path! and not '/'
+

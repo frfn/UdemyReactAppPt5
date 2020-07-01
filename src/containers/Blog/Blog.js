@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 // import axios from 'axios'
 // import axios from "../../axios";
 
@@ -8,10 +8,26 @@ import { Route, NavLink, Switch } from "react-router-dom";
 // import NewPost from "./NewPost/NewPost";
 import "./Blog.css";
 import Posts from "./Posts/Posts";
-import NewPost from "./NewPost/NewPost";
-import FullPost from "./FullPost/FullPost";
+
+/* we want to load this dynamically now */
+//import NewPost from "./NewPost/NewPost";
+import asyncComponent from '../../HOC/AsyncComponent'
+const AsyncNewPost = asyncComponent(() => {
+	/* import() is a special syntax, dynamic import */
+	return import("./NewPost/NewPost");
+});
+
+// import FullPost from "./FullPost/FullPost";
+
+/* when we import stuff, webpack (the build tool used behind the scenes) is informed about the dependency and include it in the global bundle, bundle.js */
+// code splitting, lazy loading, we don't want that. We only want that component to be loaded when needed.
 
 class Blog extends Component {
+	/* Navigation Guard */
+	state={
+		auth: true
+	}
+
 	render() {
 		return (
 			<div className='Blog'>
@@ -22,7 +38,7 @@ class Blog extends Component {
 							{/* List Elements */}
 							<li>
 								<NavLink
-									// exact // the styling will be active if we EXACTLY have the '/' URL
+									exact // the styling will be active if we EXACTLY have the '/' URL
 									to='/posts' //changing the '/' to '/posts'
 									activeClassName='the-active-class' /* for CSS use, a.the-active-class */
 								>
@@ -53,15 +69,18 @@ class Blog extends Component {
 				</header>
 
 				<Switch>
+					{/* <Route path='/new-post' render={() => <NewPost />} /> */}
+									
+					{/* This is a Navigation Guard */}
+					{this.state.auth ? <Route path='/new-post' component={AsyncNewPost} /> : null} 
+
 					{/* path variable is RESERVED word */}
 					{/* '/' root should always be exact because each path has a root. */}
-					<Route path='/posts' exact component={Posts} />
-					{/* <Route path='/new-post' render={() => <NewPost />} /> */}
-					<Route path='/new-post' component={NewPost} />
-
-					{/* I can set routing here for the post... /:id - dynamic URL, 'id' will be in   */}
-					{/* :num = inside params, we then use in FullPost as this.props.match.params.num */}
-					<Route path='/posts/:num' exact component={FullPost} />
+					<Route path='/posts' component={Posts} />
+						
+					{/* <Route render={() => <h1>ERROR 404</h1>} />   */}
+					<Redirect from='/' to='/posts' />
+					{/* <Route path='/' component={Posts} /> */}
 				</Switch>
 
 				{/* <section className="Posts">
