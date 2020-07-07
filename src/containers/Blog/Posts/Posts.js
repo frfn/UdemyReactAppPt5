@@ -74,11 +74,11 @@ class Posts extends Component {
 		// 	// }
 		// );
 
-		this.props.history.push({
-			pathname: "/posts/" + id,
-		});
+		// this.props.history.push({
+		// 	pathname: "/posts/" + id,
+		// });
 
-		// this.props.history.push('/' + id);
+		this.props.history.push('/posts/' + id);
 	};
 
 	render() {
@@ -108,7 +108,7 @@ class Posts extends Component {
 							match = {this.props.matchh}
 						*/
 					/>
-					//  </Link>
+					// </Link>
 				);
 			});
 		}

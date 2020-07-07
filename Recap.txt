@@ -426,7 +426,7 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
             - This is how you load components asynchronously
             - Useful for bigger apps!
 
-    24a. React Suspense -- Same as Lazy Loading
+    24a. React Suspense -- Same as Lazy Loading -- IN "Downloads/66. React Suspense Start"
         MUST NEED: React v16.6
             - New method called the lazy()
             - official way to load components lazily!
@@ -448,4 +448,11 @@ Setting up took almost 20-25 min since I had created app from npx create-react-a
                 development server is configured differently (to load correctly), now we have to configure the server side too.
                 --> MUST load and return index.html, especially in 404 cases! React will take over.
                 --> if we have example.com/my-app, we MUST set base path! and not '/'
+                --> CHECK App.js, basename='/' has been added to the BrowserRouter component!
+                    --> http://localhost:3000/my-app/posts it will now look like this
+                    --> if you are serving on the server side, you must configure the BASE name!
+
+    25. Assignment
+        In file 66. ROUTER ASSIGNMENT, there are comments on there that are helpful for Routing needs.
+
 

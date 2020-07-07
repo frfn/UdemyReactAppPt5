@@ -7,7 +7,7 @@ class App extends Component {
 	render() {
 		return (
       /* BrowserRouter is for routing purposes, wrap any component you want with BrowserRouter to use */
-			<BrowserRouter>
+			<BrowserRouter basename='/my-app'>
 				<div className='App'>
 					<Blog />
 				</div>
