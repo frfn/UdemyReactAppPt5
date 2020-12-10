@@ -5,7 +5,7 @@ import "./FullPost.css";
 
 /* ANYTHING with this.props.id = undefined. I left it there for demo purposes, you can see IN console log */
 /* this.state.loadedPost in this example is the axios data */
-/* this.props are the properties PASSED FROM Blog.js because of the <Route to='/posts/:id/' exact component={FullPost}> tag */
+/* this.props are the properties PASSED FROM Posts.js because of the <Route to='/posts/:id/' exact component={FullPost}> tag */
 
 class FullPost extends Component {
 	/* loadedPost - right now, nothing has been loaded! */
@@ -38,7 +38,7 @@ class FullPost extends Component {
 		this.loadData();
 	}
 
-	/* IMPORTANT FIX. */
+	/* IMPORTANT FIX. Since Load Data works the same for an update or a mount, just use this method for both lifecycles */
 	loadData () {
 		/* if props.id is TRUE, execute */
 		if (this.props.match.params.num) {
@@ -46,7 +46,7 @@ class FullPost extends Component {
 			/* this.state.loadedPost checks to see if loadedPost has a value, if it does, true! */
 			/* 
             This is the last check!
-            loadedPost.id !== porps.id
+            loadedPost.id !== props.id
             
             3 !== 4, true, so execute line!
             3 !== 3  false, 3 IS 3, line will not execute!

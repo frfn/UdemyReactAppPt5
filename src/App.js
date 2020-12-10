@@ -7,7 +7,7 @@ class App extends Component {
 	render() {
 		return (
       /* BrowserRouter is for routing purposes, wrap any component you want with BrowserRouter to use */
-			<BrowserRouter basename='/my-app'>
+			<BrowserRouter basename='/my-app-check-App.js-basename'>
 				<div className='App'>
 					<Blog />
 				</div>

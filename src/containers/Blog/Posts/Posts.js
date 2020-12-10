@@ -3,7 +3,7 @@ import Post from "../../../components/Post/Post";
 import axios from "../../../axios";
 import styles from "./Posts.module.css";
 import { Link, Route } from "react-router-dom";
-import FullPost from '../FullPost/FullPost'
+import FullPost from "../FullPost/FullPost";
 
 class Posts extends Component {
 	state = {
@@ -27,7 +27,7 @@ class Posts extends Component {
 			/* the 'response' has valuable data like status, statusText, requests, etc., INCLUDING the .data (which are Arrays!) */
 			.then((response) => {
 				/* grabbing the first 5 objects */
-				const posts = response.data.slice(0, 4);
+				const posts = response.data.slice(0, 5);
 
 				/* adding an author field */
 				/* post is the object in the array starting from index 0 */
@@ -78,7 +78,7 @@ class Posts extends Component {
 		// 	pathname: "/posts/" + id,
 		// });
 
-		this.props.history.push('/posts/' + id);
+		this.props.history.push("/posts/" + id);
 	};
 
 	render() {
@@ -88,6 +88,7 @@ class Posts extends Component {
 
 		if (!this.state.error) {
 			posts = this.state.posts.map((post) => {
+				// console.log(post);
 				return (
 					/* post.id IS from the response.data */
 					/* KEY as we know MUST be in the most OUTER tag */
@@ -105,7 +106,7 @@ class Posts extends Component {
 
 						   - this passes ALL the props into the Post.js component or do it manually
 
-							match = {this.props.matchh}
+							match = {this.props.match}
 						*/
 					/>
 					// </Link>
@@ -115,9 +116,15 @@ class Posts extends Component {
 		return (
 			<div>
 				<section className={styles.Posts}>{posts}</section>
-				{/* I can set routing here for the post... /:id - dynamic URL, 'id' will be in   */}
+				{/* I can set routing here for the post... /:num - dynamic URL, 'num' will be in   */}
 				{/* :num = inside params, we then use in FullPost as this.props.match.params.num */}
-				<Route path={this.props.match.url + '/:num'} exact component={FullPost} />
+
+				{/* by doing the /:num, we are able to USE the value of 'num' and use it HOW WE WANT, go to FullPost.js */}
+				<Route
+					path={this.props.match.url + "/:num"}
+					exact
+					component={FullPost}
+				/>
 				{console.log(this.props)}
 			</div>
 		);

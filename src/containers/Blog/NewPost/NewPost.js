@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../../axios";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 
 import "./NewPost.css";
 
@@ -17,12 +17,12 @@ class NewPost extends Component {
 		/* If we want to check for VALIDATION, pass in this.props.auth and check to see. */
 		// If unauth => this.props.history.replace('/posts');
 
-        console.log(this.props);
-        
-        /* Gives the KEY VALUE pair of the search query! */
-        const query = new URLSearchParams(this.props.location.search)
-		for(let params of query.entries()) {
-			console.log(params)
+		console.log(this.props);
+
+		/* Gives the KEY VALUE pair of the search query! */
+		const query = new URLSearchParams(this.props.location.search);
+		for (let params of query.entries()) {
+			console.log(params);
 		}
 	}
 
@@ -35,8 +35,8 @@ class NewPost extends Component {
 			() => {
 				console.log(this.state.status);
 			}
-        );
-        
+		);
+
 		const data = {
 			title: this.state.title,
 			body: this.state.body,
@@ -61,9 +61,9 @@ class NewPost extends Component {
 				/* this.setState({
                     status: response.status
 				}) */
-				
+
 				/* THIS PUSHES US TO THE NEXT PAGE, the next page, consists of /posts */
-				this.props.history.push('/posts')
+				this.props.history.push("/posts");
 			})
 			.catch((error) => {
 				console.log(error);
@@ -105,12 +105,11 @@ class NewPost extends Component {
 
 		// let redirect = null;
 		// if (this.state.submitted) {
-		// 	redirect = <Redirect to="/posts/" /> 
+		// 	redirect = <Redirect to="/posts/" />
 		// }
 
 		return (
-			<div className='NewPost'>
-
+			<div className="NewPost">
 				{/* REDIRECTION HERE */}
 				{/* {redirect} */}
 
@@ -118,7 +117,8 @@ class NewPost extends Component {
 
 				<label>Title</label>
 				<input
-					type='text'
+					placeholder="Enter Title"
+					type="text"
 					value={this.state.title}
 					onChange={(event) =>
 						this.setState({ title: event.target.value }, () => {
@@ -129,7 +129,8 @@ class NewPost extends Component {
 
 				<label>Content</label>
 				<textarea
-					rows='4'
+					placeholder="Enter Content"
+					rows="4"
 					value={this.state.body}
 					onChange={(event) =>
 						this.setState({ body: event.target.value }, () => {
@@ -148,9 +149,9 @@ class NewPost extends Component {
 						})
 					}
 				>
-					<option value='Max'>Max</option>
-					<option value='Manu'>Manu</option>
-					<option value='Flex'>Flex</option>
+					<option value="Max">Max</option>
+					<option value="Manu">Manu</option>
+					<option value="Flex">Flex</option>
 				</select>
 
 				<button onClick={this.postDataHandler}>{buttonString}</button>
