@@ -78,7 +78,9 @@ class Posts extends Component {
 		// 	pathname: "/posts/" + id,
 		// });
 
-		this.props.history.push("/posts/" + id);
+		this.props.history.push(
+			"/posts/" + id
+		); /* This takes into account that the route uses RELATIVE PATH */
 	};
 
 	render() {
@@ -119,7 +121,7 @@ class Posts extends Component {
 				{/* I can set routing here for the post... /:num - dynamic URL, 'num' will be in   */}
 				{/* :num = inside params, we then use in FullPost as this.props.match.params.num */}
 
-				{/* by doing the /:num, we are able to USE the value of 'num' and use it HOW WE WANT, go to FullPost.js */}
+				{/* by doing the /:num, we are able to USE the value of 'num' and use it HOW WE WANT, go to FullPost.js, note this will be using THE RELATIVE PATH */}
 				<Route
 					path={this.props.match.url + "/:num"}
 					exact
